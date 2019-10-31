@@ -1,0 +1,30 @@
+ <ion-content>
+   <figure text-center padding>
+     <img src="../../assets/logo.png" alt="">
+   </figure>
+   <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
+
+     <!-- email -->
+    <ion-item>
+    <ion-input placeholder="Email" formControlName="email"></ion-input>
+    </ion-item>
+    <div class="red" *ngIf="loginForm.controls['email'].touched &&loginForm.controls['email'].errors?.required">El correo es requerido</div>
+    <div class="red" *ngIf="loginForm.controls['email'].errors?.email">El correo no es valido</div>
+
+    <!-- password -->
+    <ion-item>
+    <ion-input placeholder="Password" type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div class="red" *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].errors?.required">La contraseña es requerida</div>
+    <div class="red" *ngIf="loginForm.controls['password'].errors?.minlength">
+     La contraseña debe tener minimo {{loginForm.controls['password'].errors?.minlength.requiredLength}} caracteres (Actualmente: {{loginForm.controls['password'].errors?.minlength.actualLength}})</div>
+   
+    <ion-button color="success" expand="full" [disabled]="loginForm.invalid" type="submit" >Enviar</ion-button>
+    {{errorMessage}}
+   </form>
+</ion-content>
+
+
+<ion-footer text-center>
+  <ion-button (click)="goToRegister()" expand="full" fill="outline" color="success" >Click para registrar</ion-button>
+</ion-footer>
