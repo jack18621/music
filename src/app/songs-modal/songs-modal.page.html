@@ -1,14 +1,15 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{artist + "- Top tracks"}}</ion-title>
+    <ion-title>{{artist + desc}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="selectSong()">Cerrar</ion-button>
+      <ion-button (click)="close(noSong)">Cerrar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- <ion-item *ngFor="let song of songs; let i = index" (click)="selectSong(song)">
+    <ion-img *ngIf="songs.length===1" [src]="image.url"></ion-img>
+ <ion-item margin-top *ngFor="let song of songs; let i = index" (click)="selectSong(song)">
    <ion-avatar>
      {{i+1}}
     </ion-avatar>
