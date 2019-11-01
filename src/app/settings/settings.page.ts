@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import {Plugins, CameraResultType, CameraSource} from "@capacitor/core"
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { Storage } from '@ionic/storage';
 
 
 
@@ -8,14 +11,28 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit {
-
-  
-  constructor() { 
+export class SettingsPage {
+  userImage="../../assets/noPhoto.png"
+  photo: SafeResourceUrl;
+  constructor(private sanitizer:DomSanitizer, private storage: Storage) { 
 
   }
 
-  ngOnInit() {
+  ionViewDidEnter(){
+    this.photo=this.storage.get('photo')
+  }
+
+   async takePhoto(){
+    const image = await Plugins.Camera.getPhoto({
+      quality:100,
+      allowEditing:false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera
+    })
+    this.photo=this.sanitizer.bypassSecurityTrustResourceUrl(
+      image && image.dataUrl
+    )
+    this.storage.set('photo', this.photo)
   }
 
 }

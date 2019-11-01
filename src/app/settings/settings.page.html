@@ -5,7 +5,10 @@
 </ion-header>
 
 <ion-content>
- <ion-avatar (click)="takePhoto()"></ion-avatar>
+ <ion-avatar (click)="takePhoto()">
+   <img [src]="userImage" *ngIf="!photo" alt="">
+   <img [src]="photo" *ngIf="photo" alt="">
+ </ion-avatar>
   
 
 </ion-content>
